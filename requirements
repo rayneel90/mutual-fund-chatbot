@@ -1,0 +1,7 @@
+beautifulsoup4
+html5lib
+lxml
+mysqlclient
+pandas
+requests
+sqlalchemy
