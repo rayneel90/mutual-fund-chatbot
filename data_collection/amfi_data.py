@@ -1,7 +1,8 @@
 import requests
 import pandas as pd
 from sqlalchemy import create_engine
-
+sql.format(yr_rng[0],yr_rng[1])
+import pickle
 
 engine = create_engine("mysql://neel:pass@123@localhost/mutual_fund?c"
                        "harset=utf8mb4")
@@ -37,6 +38,7 @@ def collect_historical_data(start='04-01-2006', end=pd.datetime.today() ):
                 df['AMC'] = dat[fnm]
                 df.Date = pd.to_datetime(df.Date)
                 df_list.append(df)
+        df = pd.concat(df_list)
         df.to_sql('amfi_dump', engine, if_exists='append', index=False)
         print(dt)
 
@@ -48,5 +50,4 @@ try:
 except:
     collect_historical_data()
 
-dat = pd.DataFrame(lst)
-dat.to_sql('valuresearch_dump',engine,if_exists='replace')
+
