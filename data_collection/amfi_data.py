@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 from sqlalchemy import create_engine
 from dateutil.relativedelta import relativedelta
-engine = create_engine("mysql://neel:pass@123@localhost/mutual_fund")
+engine = create_engine("mysql://neel:pass@123@139.59.19.67:3306/mutual_fund")
 
 
 def collect_historical_data(start='04-01-2006', end=pd.datetime.today()):
