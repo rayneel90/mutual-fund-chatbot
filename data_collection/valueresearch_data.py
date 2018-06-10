@@ -7,11 +7,11 @@ engine = create_engine("mysql://neel:pass@123@localhost/mutual_fund?c"
                        "harset=utf8mb4")
 
 
-def collect_snapshot():
+def collect_snapshot(a):
     url_tmplt = 'https://www.valueresearchonline.com/funds/newsnapsh' \
                'ot.asp?schemecode={0}'
     lst = []
-    for i in range(101, 40000):
+    for i in range(a, 40000):
         try:
             req = requests.get(url_tmplt.format(i))
             txt = BeautifulSoup(req.text, 'lxml')
@@ -24,18 +24,20 @@ def collect_snapshot():
             dat.update({'Scheme_Code': fnm, 'RD': rd, 'SL': i})
             lst.append(dat)
             print('pass', i)
-            with open('data/valueresearch_temp_dump.pkl', 'wb')as fil:
+            with open('../data/valueresearch_temp_dump.pkl', 'wb')as fil:
                 pickle.dump(lst, fil)
         except IndexError:
             print('fail', i)
+        except AttributeError:
+            print('fail', i)
 
 
-def collect_portfolio():
+def collect_portfolio(a):
     url_tmplt = 'https://www.valueresearchonline.com/funds/portfolio' \
                    'vr.asp?schemecode={0}'
     port_agg = []
     port_hold = []
-    for i in range(101, 40000):
+    for i in range(a, 40000):
         try:
             req = requests.get(url_tmplt.format(i))
             txt = BeautifulSoup(req.text, 'lxml')
@@ -50,6 +52,11 @@ def collect_portfolio():
             port_agg.append(dat)
             df2 = pd.read_html(str(
                 txt.find('table', {'id': 'fund-snapshot-port-holdings'})))[0]
+        except IndexError:
+            print('fail', i)
 
 
 
+
+collect_snapshot(6607)
+collect_portfolio(101)

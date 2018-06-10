@@ -2,8 +2,7 @@ import requests
 import pandas as pd
 from sqlalchemy import create_engine
 from dateutil.relativedelta import relativedelta
-engine = create_engine("mysql://neel:pass@123@localhost/mutual_fund?c"
-                       "harset=utf8mb4")
+engine = create_engine("mysql://neel:pass@123@localhost/mutual_fund")
 
 
 def collect_historical_data(start='04-01-2006', end=pd.datetime.today()):
@@ -25,7 +24,6 @@ def collect_historical_data(start='04-01-2006', end=pd.datetime.today()):
                       for i in range(len(types)-1)}
         df_list=[]
         for key, val in fund_names.items():
-            print(key)
             while val:
                 fnm = val.pop(0)
                 lst = []
